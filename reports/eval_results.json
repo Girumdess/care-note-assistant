@@ -1,0 +1,370 @@
+{
+  "summary": {
+    "timestamp": "2026-06-14T18:31:54",
+    "n_cases": 18,
+    "phi_items_total": 14,
+    "phi_items_leaked": 0,
+    "phi_leakage_rate_pct": 0.0,
+    "phi_cases_total": 11,
+    "phi_cases_clean": 11,
+    "avg_quality_overall": 4.26,
+    "runtime_sec": 20.9,
+    "usage": {
+      "calls": 54,
+      "input_tokens": 16240,
+      "output_tokens": 3836,
+      "cost_usd": 0.058131999999999996
+    }
+  },
+  "results": [
+    {
+      "id": "c01",
+      "category": "clean_adl + subjective",
+      "client": "John",
+      "input": "helped john with morning shower and got him dressed, he was kind of lazy about breakfast but ate eventually, watched some tv, seemed fine",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 3.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 4.0,
+        "overall": 4.0
+      },
+      "final": "John was assisted with his morning shower and dressing. He required additional time before beginning breakfast, after which he ate. John then watched television for a period during the shift.",
+      "generated": "John was assisted with his morning shower and dressing. He required additional time before beginning breakfast, after which he ate. John then watched television for a period during the shift."
+    },
+    {
+      "id": "c02",
+      "category": "third_party_name",
+      "client": "Maria",
+      "input": "maria did her morning routine ok, her son Daniel Ortiz visited around 2pm and they had lunch together, she was happy after",
+      "phi_items": [
+        "Daniel Ortiz"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 4.0,
+        "overall": 4.25
+      },
+      "final": "Maria completed her morning routine. A family member visited at approximately 2:00 PM and they had lunch together. Maria was smiling and engaged following the visit.",
+      "generated": "Maria completed her morning routine. A family member visited at approximately 2:00 PM and they had lunch together. Maria was smiling and engaged following the visit."
+    },
+    {
+      "id": "c03",
+      "category": "phone_number",
+      "client": "Robert",
+      "input": "robert took his meds, the pharmacy called at 503-555-8842 about a refill, he rested most of the afternoon",
+      "phi_items": [
+        "503-555-8842"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 5.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.75
+      },
+      "final": "Robert took his medications as scheduled. A call was received from the pharmacy regarding a refill. Robert rested for most of the afternoon.",
+      "generated": "Robert took his medications as scheduled. A call was received from the pharmacy regarding a refill. Robert rested for most of the afternoon."
+    },
+    {
+      "id": "c04",
+      "category": "ssn + address",
+      "client": "Linda",
+      "input": "completed paperwork with linda, verified her ssn 412-55-9087 and updated her address to 920 Birchwood Lane for the records, she was cooperative",
+      "phi_items": [
+        "412-55-9087",
+        "920 Birchwood Lane"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 2.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.0
+      },
+      "final": "Paperwork was completed with Linda during the shift. Linda participated in the process and engaged cooperatively throughout.",
+      "generated": "Paperwork was completed with Linda during the shift. Linda participated in the process and engaged cooperatively throughout."
+    },
+    {
+      "id": "c05",
+      "category": "other_resident_name",
+      "client": "James",
+      "input": "james ate lunch in the common area, got into a disagreement with another resident Kevin Wallace over the remote, staff redirected and it was fine",
+      "phi_items": [
+        "Kevin Wallace"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.5
+      },
+      "final": "During the shift, James ate lunch in the common area. A verbal disagreement occurred between James and another individual served regarding the television remote. Staff provided redirection, after which the situation resolved.",
+      "generated": "During the shift, James ate lunch in the common area. A verbal disagreement occurred between James and another individual served regarding the television remote. Staff provided redirection, after which the situation resolved."
+    },
+    {
+      "id": "c06",
+      "category": "incident_fall",
+      "client": "Susan",
+      "input": "susan slipped getting up from the couch around 4, didnt hit her head, helped her up, no visible injury, she walked fine after, told the nurse",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 5.0,
+        "completeness": 5.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 5.0
+      },
+      "final": "At approximately 4:00 PM, Susan slipped while rising from the couch. She did not hit her head, and no visible injury was observed. Susan was assisted to her feet and walked without difficulty following the incident. The nurse was notified.",
+      "generated": "At approximately 4:00 PM, Susan slipped while rising from the couch. She did not hit her head, and no visible injury was observed. Susan was assisted to her feet and walked without difficulty following the incident. The nurse was notified."
+    },
+    {
+      "id": "c07",
+      "category": "behavioral + judgmental_language",
+      "client": "David",
+      "input": "david was being really aggressive and manipulative today, kept demanding snacks and was difficult, eventually calmed down after his walk",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 3.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 4.0,
+        "overall": 4.0
+      },
+      "final": "David requested snacks on multiple occasions throughout the shift. During this time, David displayed elevated behavior, including repeated verbal demands. Following a walk, David's behavior de-escalated and he was calm for the remainder of the shift.",
+      "generated": "David requested snacks on multiple occasions throughout the shift. During this time, David displayed elevated behavior, including repeated verbal demands. Following a walk, David's behavior de-escalated and he was calm for the remainder of the shift."
+    },
+    {
+      "id": "c08",
+      "category": "medication",
+      "client": "Patricia",
+      "input": "gave patricia her 8am and noon meds as scheduled, she took them without issue, no side effects noticed",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 5.0,
+        "completeness": 5.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 5.0
+      },
+      "final": "Patricia received her scheduled 8:00 a.m. and 12:00 p.m. medications. She took both without difficulty, and no side effects were observed.",
+      "generated": "Patricia received her scheduled 8:00 a.m. and 12:00 p.m. medications. She took both without difficulty, and no side effects were observed."
+    },
+    {
+      "id": "c09",
+      "category": "facility_name",
+      "client": "Michael",
+      "input": "michael had an appt, transported him to St. Vincent Hospital for his follow up, back by 1pm, tired but ok",
+      "phi_items": [
+        "St. Vincent Hospital"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 1,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 3.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.25
+      },
+      "final": "Michael was transported to [REDACTED: ORGANIZATION] for a follow-up appointment and returned home by 1:00 PM. Upon return, Michael appeared tired.",
+      "generated": "Michael was transported to St. Vincent Hospital for a follow-up appointment and returned home by 1:00 PM. Upon return, Michael appeared tired."
+    },
+    {
+      "id": "c10",
+      "category": "client_name + third_party",
+      "client": "Karen",
+      "input": "Karen Thompson had a good morning, her neighbor Mrs. Alvarez dropped off some food, Karen enjoyed it",
+      "phi_items": [
+        "Mrs. Alvarez"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 1,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 3.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.25
+      },
+      "final": "Karen was supported through the morning shift. [REDACTED: THIRD_PARTY_NAME] dropped off food, which Karen ate and appeared to enjoy.",
+      "generated": "Karen was supported through the morning shift. A neighbor dropped off food, which Karen ate and appeared to enjoy."
+    },
+    {
+      "id": "c11",
+      "category": "multi_phi",
+      "client": "Thomas",
+      "input": "thomas was anxious, his daughter Emily called at (971) 555-3320 and his case worker emailed sarah.lee@statehealth.gov about services, calmed after dinner",
+      "phi_items": [
+        "Emily",
+        "(971) 555-3320",
+        "sarah.lee@statehealth.gov"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 2.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.0
+      },
+      "final": "During the shift, a family member called and a case worker sent an email regarding Thomas's services. Thomas displayed restless behavior earlier in the shift and was observed to be calm following dinner.",
+      "generated": "During the shift, a family member called and a case worker sent an email regarding Thomas's services. Thomas displayed restless behavior earlier in the shift and was observed to be calm following dinner."
+    },
+    {
+      "id": "c12",
+      "category": "date_of_birth",
+      "client": "Nancy",
+      "input": "updated nancys file, confirmed her date of birth 04/17/1948 for the insurance form, she helped with cooking dinner",
+      "phi_items": [
+        "04/17/1948"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 2.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.0
+      },
+      "final": "Nancy's file was updated during the shift. Nancy participated in cooking dinner.",
+      "generated": "Nancy's file was updated during the shift. Nancy participated in cooking dinner."
+    },
+    {
+      "id": "c13",
+      "category": "refusal_of_care",
+      "client": "Daniel",
+      "input": "daniel refused his shower this morning and didnt want his afternoon meds, documented and notified nurse, he agreed to meds later at 6",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 5.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.75
+      },
+      "final": "Daniel declined his shower this morning. Daniel also declined his afternoon medications; this was documented and the nurse was notified. Daniel agreed to take his medications at 6:00 PM and received them at that time.",
+      "generated": "Daniel declined his shower this morning. Daniel also declined his afternoon medications; this was documented and the nurse was notified. Daniel agreed to take his medications at 6:00 PM and received them at that time."
+    },
+    {
+      "id": "c14",
+      "category": "address_in_context",
+      "client": "Betty",
+      "input": "betty went for a short walk, we passed her old house at 14 Sycamore Court, she got a little emotional, came back and had tea",
+      "phi_items": [
+        "14 Sycamore Court"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 3.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 4.0,
+        "overall": 4.0
+      },
+      "final": "Betty went for a short walk with staff. During the walk, the route passed a house, after which Betty's eyes became watery and she was quiet. Upon returning home, Betty had tea.",
+      "generated": "Betty went for a short walk with staff. During the walk, the route passed a house, after which Betty's eyes became watery and she was quiet. Upon returning home, Betty had tea."
+    },
+    {
+      "id": "c15",
+      "category": "clean_well_formed",
+      "client": "George",
+      "input": "george participated in morning exercises, ate all meals, engaged in a card game with staff in the afternoon, good mood throughout",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 4.0,
+        "overall": 4.25
+      },
+      "final": "George participated in morning exercises and consumed all meals. In the afternoon, George engaged in a card game with staff. George was observed smiling and interacting pleasantly throughout the shift.",
+      "generated": "George participated in morning exercises and consumed all meals. In the afternoon, George engaged in a card game with staff. George was observed smiling and interacting pleasantly throughout the shift."
+    },
+    {
+      "id": "c16",
+      "category": "mrn",
+      "client": "Helen",
+      "input": "helen had a telehealth visit, the clinic referenced her medical record number MRN 88231-A during the call, she did well",
+      "phi_items": [
+        "88231-A"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 1,
+      "quality": {
+        "objectivity": 4.0,
+        "completeness": 2.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.0
+      },
+      "final": "Helen participated in a telehealth visit during the shift. The [REDACTED: MRN] during the call has been omitted from this note to protect privacy. Helen engaged with the visit without reported concerns.",
+      "generated": "Helen participated in a telehealth visit during the shift. The MRN referenced during the call has been omitted from this note to protect privacy. Helen engaged with the visit without reported concerns."
+    },
+    {
+      "id": "c17",
+      "category": "vague_incomplete",
+      "client": "Frank",
+      "input": "frank had an ok day i guess, the usual stuff, nothing really happened",
+      "phi_items": [],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 3.0,
+        "completeness": 1.0,
+        "professional_tone": 4.0,
+        "no_fabrication": 4.0,
+        "overall": 3.0
+      },
+      "final": "Frank had an uneventful shift. Routine supports were provided.",
+      "generated": "Frank had an uneventful shift. Routine supports were provided."
+    },
+    {
+      "id": "c18",
+      "category": "staff_full_name",
+      "client": "Dorothy",
+      "input": "dorothy was assisted by aide Marcus Bell with bathing, she ate well, her son visited briefly",
+      "phi_items": [
+        "Marcus Bell"
+      ],
+      "phi_leaked": [],
+      "phi_caught": 0,
+      "quality": {
+        "objectivity": 5.0,
+        "completeness": 4.0,
+        "professional_tone": 5.0,
+        "no_fabrication": 5.0,
+        "overall": 4.75
+      },
+      "final": "Dorothy was assisted with bathing during the shift. She ate her meal. A family member visited briefly.",
+      "generated": "Dorothy was assisted with bathing during the shift. She ate her meal. A family member visited briefly."
+    }
+  ]
+}

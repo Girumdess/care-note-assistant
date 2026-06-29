@@ -1,6 +1,8 @@
 # CareScribe AI
 
-**Compliant care documentation with built-in PHI protection.** CareScribe turns a caregiver's rough shift notes into objective, professional progress notes — and screens every note for protected health information before it is saved.
+**Privacy-first care documentation with built-in PHI protection.** CareScribe turns a caregiver's rough shift notes into objective, professional progress notes — and screens every note for protected health information before it is saved.
+
+**▶️ Live demo:** https://care-note-assist.streamlit.app — runs on synthetic demo data, no setup or API key needed.
 
 > ⚠️ Prototype demonstrated entirely on **synthetic data**. Not a certified HIPAA-compliant system. See *Compliance* below.
 

@@ -100,7 +100,7 @@ def score_bar(label, score, maxv=5):
 st.markdown("""
 <div class="hero">
   <h1>🩺 CareScribe&nbsp;AI</h1>
-  <p>Compliant care documentation with PHI protection — daily notes, weekly highlights, and client health trends.</p>
+  <p>Privacy-first care documentation with PHI protection — daily notes, weekly highlights, and client health trends.</p>
   <div>
     <span class="badge">✓ 0.0% PHI leakage on the test set</span>
     <span class="badge">✓ 4.26 / 5 documentation quality</span>
@@ -163,7 +163,7 @@ with tab_daily:
     ndate = st.date_input("Date of service", value=date.today())
     st.caption("Type the rough notes below — voice dictation is planned for the Mac desktop version, where it can run reliably offline.")
     rough = st.text_area("Rough shift notes", key="rough", height=140,
-                         placeholder="helped John shower, difficult about lunch, "
+                         placeholder="helped with shower this morning, difficult about lunch, "
                                      "daughter Sarah called at 555-203-4471, gave meds at noon")
     if st.button("Generate compliant note", type="primary"):
         if not rough.strip():

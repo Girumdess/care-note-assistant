@@ -1,5 +1,7 @@
 # CareScribe AI
 
+[![CI](https://github.com/Girumdess/care-note-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Girumdess/care-note-assistant/actions/workflows/ci.yml)
+
 **Privacy-first care documentation with built-in PHI protection.** CareScribe turns a caregiver's rough shift notes into objective, professional progress notes — and screens every note for protected health information before it is saved.
 
 **▶️ Live demo:** https://care-note-assist.streamlit.app — runs on synthetic demo data, no setup or API key needed.
@@ -19,6 +21,20 @@ Measured by an automated eval harness over 18 adversarial synthetic cases:
 - **4.26 / 5 documentation quality** — scored by an independent LLM judge on objectivity, completeness, professional tone, and no-fabrication.
 
 ## Architecture
+
+```mermaid
+flowchart LR
+    A[Rough shift notes] --> B[Generation<br/>LLM + documentation policy]
+    B --> C{PHI guardrail}
+    C --> C1[Layer 1: regex<br/>SSN, phone, email, address, MRN]
+    C --> C2[Layer 2: LLM pass<br/>names, places, DOB, IDs]
+    C1 --> D[Redaction]
+    C2 --> D
+    D --> E[(SQLite<br/>notes per client)]
+    E --> F[Insights<br/>weekly summary, health overview]
+    D -.-> G[Eval harness<br/>PHI leakage + quality judge]
+```
+
 Rough notes → **generation** (LLM under a strict documentation policy) → **PHI guardrail** (regex + LLM, with redaction) → compliant note. A SQLite store holds per-client notes; **insights** (weekly summary, health overview) run over a client's history. An **evaluation harness** scores PHI-leakage rate and documentation quality.
 
 - Generation & insights: Claude Sonnet 4.6
@@ -34,6 +50,14 @@ cp .env.example .env        # then add your Anthropic API key
 streamlit run app.py
 ```
 Live generation needs an Anthropic API key (~1¢/note, billed to your own account). The **Examples** and **Evaluation** tabs work with no key.
+
+## Run the tests
+The regex layer, redaction, and parsing are covered by offline tests that need no API key. They run on every push through GitHub Actions, along with a lint check.
+```bash
+pip install pytest ruff
+pytest -q
+ruff check .
+```
 
 ## Run the evaluation
 ```bash

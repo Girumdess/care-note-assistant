@@ -38,33 +38,67 @@ DEMO = load_demo_insights()
 EVAL = load_eval()
 
 # ----------------------------- styling -----------------------------
-st.markdown("""
+st.html("""
 <style>
-.block-container { padding-top: 2rem; max-width: 1150px; }
-.hero { background: linear-gradient(120deg,#0E7C7B 0%,#115E59 100%);
-        padding: 1.8rem 2rem; border-radius: 16px; margin-bottom: 1.3rem; }
-.hero h1 { color:#fff; font-size:1.95rem; margin:0 0 .3rem 0; font-weight:750; letter-spacing:-.5px;}
-.hero p { color:#D7EEEC; font-size:1.02rem; margin:0; }
-.hero .badge { display:inline-block; background:rgba(255,255,255,.16); color:#fff;
-        padding:.28rem .7rem; border-radius:999px; font-size:.8rem; margin:.85rem .5rem 0 0;}
-.note-output { background:#F7FBFB; border-left:4px solid #0E7C7B; border-radius:8px;
-        padding:.9rem 1.1rem; line-height:1.6; font-size:.96rem; white-space:pre-wrap; margin:.3rem 0;}
-.redact { background:#FEE2E2; color:#991B1B; padding:0 .25rem; border-radius:3px; font-weight:650; }
-.phi-chip { display:inline-block; background:#FEF2F2; color:#B91C1C; border:1px solid #FCA5A5;
-        padding:.26rem .6rem; border-radius:8px; font-size:.8rem; margin:.2rem .3rem .2rem 0; }
-.muted { color:#5C6B69; font-size:.88rem; }
-.section-title { font-size:1.08rem; font-weight:700; color:#16302B; margin:.3rem 0 .5rem; }
-.footer { color:#8A9997; font-size:.84rem; text-align:center; margin-top:2.4rem;
-        padding-top:1rem; border-top:1px solid #E2EAEA; }
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+/* Layout idea: a clinical chart. Notes sit on form paper under an ink rule, PHI is blacked out
+   like a released record, numbers live in a hairline spec strip. */
+:root {
+  --ink: #14213d; --ink-2: #4a5568; --muted: #5d6878; --paper: #ffffff;
+  --chart: #f4f6f9; --rule: #dfe4ec; --rule-soft: #ebeef3;
+  --accent: #1e4d8c; --redact: #111827; --warn-bg: #fdf6e7; --warn-line: #e8c77a; --warn-ink: #6b4a0c;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+html, body, [class*="css"], .stMarkdown, .stTextInput, .stTextArea, button { font-family: var(--body); }
+.block-container { padding-top: 5rem; max-width: 1120px; }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; }
+
+.chart-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1rem 2rem;
+  align-items: end; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); margin-bottom: 0; }
+.chart-head .kicker { font: 500 .74rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 .5rem; }
+.chart-head h1 { font: 600 2.35rem/1 var(--display); color: var(--ink); margin: 0; padding: 0; }
+.chart-head p { color: var(--ink-2); font-size: 1rem; margin: .55rem 0 0; max-width: 58ch; }
+.spec { display: grid; grid-template-columns: repeat(3, minmax(0, auto)); border: 1px solid var(--rule);
+  border-radius: 4px; background: var(--paper); }
+.spec div { padding: .55rem .9rem; border-left: 1px solid var(--rule); }
+.spec div:first-child { border-left: none; }
+.spec b { display: block; font: 500 1.35rem/1.1 var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.spec span { font: 500 .68rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+@media (max-width: 760px) { .chart-head { grid-template-columns: minmax(0,1fr); } }
+
+.notice { display: flex; gap: .7rem; align-items: baseline; background: var(--warn-bg);
+  border-bottom: 1px solid var(--warn-line); color: var(--warn-ink); padding: .55rem .9rem;
+  font-size: .86rem; margin: 0 0 1.1rem; }
+.notice b { flex: none; font: 600 .7rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+
+.note-output { background: var(--paper); border: 1px solid var(--rule); border-top: 2px solid var(--ink);
+  border-radius: 0 0 4px 4px; padding: .9rem 1.1rem; line-height: 1.7; font-size: .97rem; color: var(--ink);
+  white-space: pre-wrap; margin: .3rem 0; max-width: 75ch; }
+.redact { background: var(--redact); color: #fff; padding: .05rem .4rem; border-radius: 2px;
+  font: 500 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; vertical-align: .08em; }
+.phi-chip { display: inline-block; font: 500 .74rem/1 var(--mono); color: var(--ink);
+  border: 1px solid var(--rule); background: var(--chart); padding: .35rem .55rem; border-radius: 3px; margin: .2rem .3rem .2rem 0; }
+.phi-chip b { font-weight: 600; letter-spacing: .04em; }
+.muted { color: var(--muted); font-size: .88rem; }
+.section-title { font: 600 1.25rem/1.2 var(--display); color: var(--ink); margin: .4rem 0 .6rem; }
+.stTabs [data-baseweb="tab-list"] { gap: .25rem; border-bottom: 1px solid var(--rule); }
+.stTabs [data-baseweb="tab"] { font-family: var(--body); font-weight: 500; padding: .55rem .9rem; min-height: 44px; }
+[data-testid="stMetricValue"] { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+[data-testid="stMetricLabel"] p { font: 500 .72rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.footer { color: var(--muted); font-size: .84rem; text-align: center; margin-top: 2.4rem;
+  padding-top: 1rem; border-top: 1px solid var(--rule); }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # ----------------------------- helpers -----------------------------
 def esc(t):
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def render_note(text):
-    html = re.sub(r"\[REDACTED: ([^\]]+)\]", r'<span class="redact">[\1 ✕]</span>', esc(text))
+    html = re.sub(r"\[REDACTED: ([^\]]+)\]", r'<span class="redact" title="Redacted: \1">\1</span>', esc(text))
     st.markdown(f'<div class="note-output">{html}</div>', unsafe_allow_html=True)
 
 def label_week(ws):
@@ -92,25 +126,28 @@ def score_bar(label, score, maxv=5):
     pct = int(100 * score / maxv)
     st.markdown(
         f'<div style="margin:.45rem 0;"><div style="display:flex;justify-content:space-between;'
-        f'font-size:.9rem;"><span>{label}</span><span><b>{score:.2f}</b> / {maxv}</span></div>'
-        f'<div style="background:#E2EAEA;border-radius:6px;height:9px;"><div style="width:{pct}%;'
-        f'background:#0E7C7B;height:9px;border-radius:6px;"></div></div></div>',
+        f'font-size:.9rem;"><span>{label}</span><span style="font-family:var(--mono)"><b>{score:.2f}</b> / {maxv}</span></div>'
+        f'<div style="background:var(--rule-soft);border-radius:2px;height:8px;"><div style="width:{pct}%;'
+        f'background:var(--accent);height:8px;border-radius:2px;"></div></div></div>',
         unsafe_allow_html=True)
 
 # ----------------------------- header -----------------------------
 st.markdown("""
-<div class="hero">
-  <h1>🩺 CareScribe&nbsp;AI</h1>
-  <p>Privacy-first care documentation with PHI protection — daily notes, weekly highlights, and client health trends.</p>
+<div class="chart-head">
   <div>
-    <span class="badge">✓ 0.0% PHI leakage on the test set</span>
-    <span class="badge">✓ 4.26 / 5 documentation quality</span>
-    <span class="badge">✓ All demo data synthetic</span>
+    <p class="kicker">Progress notes · synthetic demo</p>
+    <h1>CareScribe</h1>
+    <p>Rough shift notes in, objective care documentation out. Every note is screened for protected health information before it is saved.</p>
+  </div>
+  <div class="spec" role="list" aria-label="Evaluation results">
+    <div role="listitem"><b>0.0%</b><span>PHI leakage</span></div>
+    <div role="listitem"><b>4.26/5</b><span>Note quality</span></div>
+    <div role="listitem"><b>18</b><span>Adversarial cases</span></div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown('<div style="background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;padding:.6rem .9rem;border-radius:8px;font-size:.85rem;margin-bottom:1rem;">⚠️ <b>Prototype.</b> All data shown is synthetic. Do not enter real patient information. This demo is not a certified HIPAA-compliant system — see the <b>About</b> tab for what production compliance requires.</div>', unsafe_allow_html=True)
+st.markdown('<div class="notice"><b>Prototype</b><span>All data shown is synthetic. Do not enter real patient information. This demo is not a certified HIPAA-compliant system; the About tab lists what production use would require.</span></div>', unsafe_allow_html=True)
 
 # ----------------------------- sidebar -----------------------------
 with st.sidebar:
@@ -118,13 +155,13 @@ with st.sidebar:
     clients = store.list_clients()
     name_to_id = {c["name"]: c["id"] for c in clients}
     names = list(name_to_id.keys())
-    sel = st.selectbox("👤 Client", names, index=0,
+    sel = st.selectbox("Client", names, index=0,
                        help="Type to search. Each client has their own notes and health record.")
     active_id = name_to_id[sel]
     active = store.get_client(active_id)
     if active.get("profile"):
         st.caption(active["profile"])
-    with st.expander("➕ Add a client"):
+    with st.expander("Add a client"):
         nn = st.text_input("Name", key="nc_name")
         npf = st.text_input("Profile (optional)", key="nc_prof")
         if st.button("Add client"):
@@ -154,8 +191,8 @@ def need_key():
     return True
 
 tab_daily, tab_week, tab_hist, tab_health, tab_eval, tab_about = st.tabs(
-    ["✍️ Daily Note", "📅 Weekly Summary", "📚 History", "🩺 Health Record",
-     "📊 Evaluation", "ⓘ About"])
+    ["Daily note", "Weekly summary", "History", "Health record",
+     "Evaluation", "About"])
 
 # ----------------------------- DAILY NOTE -----------------------------
 with tab_daily:
@@ -196,7 +233,7 @@ with tab_daily:
             else:
                 st.success("No PHI detected.")
             st.caption(f'Cost: ${g["usage"]["cost_usd"]:.4f}')
-        if st.button(f"💾 Save to {sel}'s record"):
+        if st.button(f"Save to {sel}'s record"):
             store.add_note(active_id, g["date"], g["raw"], res["redacted"])
             st.session_state.pop("gen", None)
             st.success("Saved to the client's record.")

@@ -55,8 +55,8 @@ html, body, [class*="css"], .stMarkdown, .stTextInput, .stTextArea, button { fon
 .block-container { padding-top: 5rem; max-width: 1120px; }
 h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; }
 
-.chart-head { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 1rem 2rem;
-  align-items: end; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); margin-bottom: 0; }
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem 2rem;
+  align-items: flex-end; padding-bottom: 1rem; border-bottom: 2px solid var(--ink); margin-bottom: 0; }
 .chart-head .kicker { font: 500 .74rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase;
   color: var(--muted); margin: 0 0 .5rem; }
 .chart-head h1 { font: 600 2.35rem/1 var(--display); color: var(--ink); margin: 0; padding: 0; }
@@ -67,7 +67,8 @@ h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; }
 .spec div:first-child { border-left: none; }
 .spec b { display: block; font: 500 1.35rem/1.1 var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
 .spec span { font: 500 .68rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-@media (max-width: 760px) { .chart-head { grid-template-columns: minmax(0,1fr); } }
+.chart-head > div:first-child { flex: 1 1 340px; min-width: 0; }
+.spec { flex: 0 0 auto; }
 
 .notice { display: flex; gap: .7rem; align-items: baseline; background: var(--warn-bg);
   border-bottom: 1px solid var(--warn-line); color: var(--warn-ink); padding: .55rem .9rem;

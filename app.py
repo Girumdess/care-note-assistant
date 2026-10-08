@@ -17,7 +17,7 @@ st.set_page_config(page_title="CareScribe AI", page_icon="🩺",
 store.seed_if_empty()
 
 try:
-    from streamlit_mic_recorder import speech_to_text
+    from streamlit_mic_recorder import speech_to_text  # noqa: F401  (availability check)
     HAS_STT = True
 except Exception:
     HAS_STT = False
@@ -68,7 +68,8 @@ def render_note(text):
     st.markdown(f'<div class="note-output">{html}</div>', unsafe_allow_html=True)
 
 def label_week(ws):
-    d = date.fromisoformat(ws); e = d + timedelta(days=6)
+    d = date.fromisoformat(ws)
+    e = d + timedelta(days=6)
     if d.month == e.month:
         return f"{d.strftime('%b')} {d.day}\u2013{e.day}, {d.year}"
     return f"{d.strftime('%b')} {d.day} \u2013 {e.strftime('%b')} {e.day}, {d.year}"

@@ -1,0 +1,42 @@
+name: Keep demo awake
+
+# Visits the hosted demo every 4 hours so it never goes to sleep,
+# and wakes it if it already has. Can also be run by hand from the Actions tab.
+on:
+  schedule:
+    - cron: "17 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install browser
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Wake the demo
+        run: python .github/scripts/wake_demo.py
+      - name: Save screenshot if it failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wake-failure
+          path: wake-failure.png
+          if-no-files-found: ignore
+      # GitHub pauses scheduled workflows after 60 days without repo activity.
+      # Re-enabling this workflow through the API resets that clock.
+      - name: Keep this schedule from being paused
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "repos/${{ github.repository }}/actions/workflows/keep-demo-awake.yml/enable"

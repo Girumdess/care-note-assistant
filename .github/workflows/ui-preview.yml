@@ -33,3 +33,7 @@ jobs:
         with:
           name: ui-screenshots
           path: screenshots/
+      # TEMP: print screenshots into the log for review from a sandbox without artifact access.
+      - name: Print screenshots (temporary)
+        run: |
+          for f in screenshots/*.png; do echo "BEGIN64 $f"; base64 -w0 "$f"; echo; echo "END64"; done

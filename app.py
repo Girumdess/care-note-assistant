@@ -17,7 +17,7 @@ from care_assistant import store
 
 st.set_page_config(page_title="CareScribe · care documentation assistant",
                    page_icon=":material/clinical_notes:",
-                   layout="wide", initial_sidebar_state="expanded")
+                   layout="wide", initial_sidebar_state="auto")
 
 ROOT = Path(__file__).parent
 
@@ -78,10 +78,10 @@ h1, h2, h3 { font-family: var(--display); letter-spacing: -0.01em; }
 .hero .lede b { color: var(--ink); font-weight: 600; }
 
 .specimen { position: relative; }
-.slip { background-color: var(--paper); border: 1px solid var(--rule); border-radius: 3px; padding: .75rem 1rem .8rem;
-  font: 400 .86rem/1.75 var(--mono); color: var(--ink-2);
-  background-image: repeating-linear-gradient(transparent, transparent 1.45rem, var(--rule-soft) 1.45rem, var(--rule-soft) calc(1.45rem + 1px));
-  background-position: 0 .55rem; }
+.slip { background: var(--paper); border: 1px solid var(--rule); border-radius: 3px; padding: .75rem 1rem .6rem;
+  font: 400 .86rem/1.6rem var(--mono); color: var(--ink-2); }
+.slip .lines { display: block; background-image: linear-gradient(transparent calc(1.6rem - 1px), var(--rule-soft) calc(1.6rem - 1px));
+  background-size: 100% 1.6rem; }
 .filed { background: var(--paper); border: 1px solid var(--rule); border-top: 3px solid var(--ink);
   border-radius: 0 0 3px 3px; padding: .8rem 1.05rem; font-size: .95rem; line-height: 1.65; color: var(--ink);
   box-shadow: 0 10px 24px -18px rgba(20,33,61,.45); }
@@ -202,8 +202,8 @@ hero_case = CASES.get("c09")
 if hero_case:
     specimen = (
         '<div class="specimen" aria-label="Example: rough notes and the filed note">'
-        f'<div class="slip"><span class="tag">Rough shift notes</span>'
-        f'{mark_items(hero_case["input"], hero_case["phi_items"])}</div>'
+        f'<div class="slip"><span class="tag">Rough shift notes</span><span class="lines">'
+        f'{mark_items(hero_case["input"], hero_case["phi_items"])}</span></div>'
         f'<div class="filed"><span class="tag">Filed progress note</span>'
         f'{redaction_html(hero_case["final"])}</div></div>')
 else:
@@ -294,7 +294,8 @@ with tab_note:
             c1, c2 = st.columns(2, gap="large")
             with c1:
                 st.markdown(f'<div class="slip"><span class="tag">Rough notes, as typed</span>'
-                            f'{mark_items(r["input"], r["phi_items"])}</div>', unsafe_allow_html=True)
+                            f'<span class="lines">{mark_items(r["input"], r["phi_items"])}</span></div>',
+                            unsafe_allow_html=True)
             with c2:
                 st.markdown(f'<div class="filed"><span class="tag">Filed note</span>'
                             f'{redaction_html(r["final"])}</div>', unsafe_allow_html=True)

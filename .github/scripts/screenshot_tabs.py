@@ -28,11 +28,12 @@ def main() -> int:
                 page.screenshot(path=OUT / f"00-front{suffix}-full.png", full_page=True)
                 page.close()
                 continue
+            page.set_viewport_size({"width": 1440, "height": 2200})
             for i, tab in enumerate(TABS, start=1):
                 page.get_by_role("tab", name=tab).click()
                 page.wait_for_timeout(1_500)
                 name = tab.lower().replace("'", "").replace(" ", "-")
-                page.screenshot(path=OUT / f"{i:02d}-{name}.png", full_page=True)
+                page.screenshot(path=OUT / f"{i:02d}-{name}.png")
             page.close()
         browser.close()
     print(f"Saved {len(list(OUT.glob('*.png')))} screenshots.")

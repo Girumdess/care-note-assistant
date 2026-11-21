@@ -1,10 +1,13 @@
 name: Keep demo awake
 
-# Visits the hosted demo every 4 hours so it never goes to sleep,
-# and wakes it if it already has. Can also be run by hand from the Actions tab.
+# Visits the hosted demo every 2 hours so it never goes to sleep,
+# and wakes it if it already has. Streamlit sleeps an app after about 12 hours
+# without visitors, and GitHub often runs scheduled jobs late or skips them,
+# so a short interval leaves plenty of margin. Can also be run by hand from
+# the Actions tab.
 on:
   schedule:
-    - cron: "17 */4 * * *"
+    - cron: "17 */2 * * *"
   workflow_dispatch:
 
 permissions:

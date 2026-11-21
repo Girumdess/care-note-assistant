@@ -12,16 +12,20 @@ from playwright.sync_api import sync_playwright
 
 URL = "https://care-note-assist.streamlit.app/"
 WAKE_BUTTON = "Yes, get this app back up!"
-READY_TEXT = "PHI leakage"  # shown on the app's main page once it has loaded
+# Text visible on the app's first screen once it has loaded. The first entry
+# matches the current front page; the second matched the older layout, so the
+# check keeps working whichever version is deployed.
+READY_TEXTS = ("rough shift notes", "PHI leakage")
 
 
 def app_is_up(page) -> bool:
     for frame in page.frames:
-        try:
-            if frame.get_by_text(READY_TEXT, exact=False).first.is_visible():
-                return True
-        except Exception:
-            continue
+        for text in READY_TEXTS:
+            try:
+                if frame.get_by_text(text, exact=False).first.is_visible():
+                    return True
+            except Exception:
+                continue
     return False
 
 

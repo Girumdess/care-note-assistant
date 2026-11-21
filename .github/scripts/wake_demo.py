@@ -47,6 +47,17 @@ def main() -> int:
         for _ in range(36):  # up to about 3 minutes
             if app_is_up(page):
                 print("CareScribe demo is awake.")
+                page.wait_for_timeout(4_000)
+                for frame in page.frames:
+                    for t in ["How it's tested", "Evaluation", "Recorded examples",
+                              "Care documentation assistant", "PHI leakage"]:
+                        try:
+                            vis = frame.get_by_text(t, exact=True).first.is_visible()
+                        except Exception:
+                            vis = False
+                        if vis:
+                            print(f"VISIBLE: {t}")
+                page.screenshot(path="wake-failure.png")
                 browser.close()
                 return 0
             page.wait_for_timeout(5_000)

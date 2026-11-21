@@ -1,71 +1,70 @@
-# CareScribe AI
+# CareScribe
 
 [![CI](https://github.com/Girumdess/care-note-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Girumdess/care-note-assistant/actions/workflows/ci.yml)
 
-**Privacy-first care documentation with built-in PHI protection.** CareScribe turns a caregiver's rough shift notes into objective, professional progress notes — and screens every note for protected health information before it is saved.
+**Caregivers write rough shift notes. CareScribe turns them into objective, professional progress notes, removes private details about anyone mentioned, and builds the weekly summary a supervisor needs.**
 
-**▶️ Live demo:** https://care-note-assist.streamlit.app — runs on synthetic demo data, no setup or API key needed.
+**[Try the live demo →](https://care-note-assist.streamlit.app)** No sign-up or API key needed. Every client and note in it is synthetic.
 
-> ⚠️ Prototype demonstrated entirely on **synthetic data**. Not a certified HIPAA-compliant system. See *Compliance* below.
+<!-- screenshot -->
 
 ## What it does
-- **Daily notes** — rewrites rough shift notes into objective, person-first, compliant documentation.
-- **PHI guardrail** — a two-layer detector (deterministic regex + an LLM contextual pass) finds and redacts SSNs, phone numbers, emails, addresses, record numbers, third-party names, facilities, and dates of birth.
-- **Weekly summaries** — surface only notable / out-of-baseline events for a supervisor, skipping routine care.
-- **Note history** — every past week, per client.
-- **Health overview** — per-client active concerns, trends over time, and watch items.
 
-## Results (synthetic evaluation)
-Measured by an automated eval harness over 18 adversarial synthetic cases:
-- **0% PHI leakage** — 0 of 14 planted identifiers survived the pipeline.
-- **4.26 / 5 documentation quality** — scored by an independent LLM judge on objectivity, completeness, professional tone, and no-fabrication.
+| | |
+|---|---|
+| **Daily notes** | Rewrites rough notes ("helped john shower, he was kind of lazy about breakfast") into objective, person-first documentation. |
+| **Privacy screen** | Checks every draft in two layers, pattern rules plus a second model, and blacks out names, phone numbers, emails, addresses, record numbers, facilities and dates of birth before the note is saved. |
+| **Weekly summaries** | Keeps only incidents, changes from baseline and follow-ups. Routine care is left out. |
+| **Health overviews** | Reads a client's whole record for active concerns, trends and things to watch. |
 
-## Architecture
+## How it works
 
 ```mermaid
 flowchart LR
-    A[Rough shift notes] --> B[Generation<br/>LLM + documentation policy]
-    B --> C{PHI guardrail}
-    C --> C1[Layer 1: regex<br/>SSN, phone, email, address, MRN]
-    C --> C2[Layer 2: LLM pass<br/>names, places, DOB, IDs]
+    A[Rough shift notes] --> B[Draft<br/>LLM + documentation policy]
+    B --> C{Privacy screen}
+    C --> C1[Pattern rules<br/>SSN, phone, email, address, MRN]
+    C --> C2[Model check<br/>names, facilities, DOB, IDs]
     C1 --> D[Redaction]
     C2 --> D
-    D --> E[(SQLite<br/>notes per client)]
-    E --> F[Insights<br/>weekly summary, health overview]
-    D -.-> G[Eval harness<br/>PHI leakage + quality judge]
+    D --> E[(Client record<br/>SQLite)]
+    E --> F[Weekly summary<br/>Health overview]
 ```
 
-Rough notes → **generation** (LLM under a strict documentation policy) → **PHI guardrail** (regex + LLM, with redaction) → compliant note. A SQLite store holds per-client notes; **insights** (weekly summary, health overview) run over a client's history. An **evaluation harness** scores PHI-leakage rate and documentation quality.
+- Drafting and summaries: Claude Sonnet 4.6
+- Privacy check and quality grading: Claude Haiku 4.5
+- Python, Streamlit, SQLite
 
-- Generation & insights: Claude Sonnet 4.6
-- PHI detection & eval scoring: Claude Haiku 4.5
+## How it's tested
 
-## Tech stack
-Python · Streamlit · Anthropic Claude API · SQLite
+An evaluation harness (`evals/`) runs 18 synthetic shift notes through the full pipeline. Eleven have private details planted on purpose (phone numbers, an SSN, a home address, a medical record number, a date of birth, a hospital, and names of family, staff and other residents); the rest cover everyday documentation such as a fall, a medication refusal and judgmental wording.
 
-## Run locally
+- **0 of 14** planted details reached a filed note.
+- **4.26 / 5** average note quality, graded by a separate model on objectivity, completeness, professional tone and not inventing facts.
+
+It's a small synthetic set and a single run, so it shows the approach holds up on these cases rather than proving clinical accuracy. The full per-case results are in the app's *How it's tested* tab and in `reports/eval_results.json`.
+
+Offline tests (`tests/`) cover the pattern rules, redaction, parsing, and a smoke test of every app tab. They run on every push, and pull requests also get screenshots of each tab.
+
+## Run it locally
+
 ```bash
 pip install -r requirements.txt
-cp .env.example .env        # then add your Anthropic API key
+cp .env.example .env        # add your Anthropic API key to run your own notes
 streamlit run app.py
 ```
-Live generation needs an Anthropic API key (~1¢/note, billed to your own account). The **Examples** and **Evaluation** tabs work with no key.
 
-## Run the tests
-The regex layer, redaction, and parsing are covered by offline tests that need no API key. They run on every push through GitHub Actions, along with a lint check.
+Without a key, the recorded examples, client history, weekly summaries and health overviews all work. A key (about a cent per note) lets you write your own notes.
+
 ```bash
-pip install pytest ruff
-pytest -q
-ruff check .
+pip install pytest ruff && pytest -q && ruff check .   # tests and lint
+PYTHONPATH=. python -m evals.run_evals                  # re-run the evaluation (needs a key)
 ```
 
-## Run the evaluation
-```bash
-PYTHONPATH=. python -m evals.run_evals
-```
+## Privacy
 
-## Compliance
-This is a privacy-by-design prototype on synthetic data — **not** a certified HIPAA-compliant system, and it should never receive real patient information. Production use with real PHI would additionally require a Business Associate Agreement (BAA) with the API provider on HIPAA-eligible hosting, authentication / role-based access control, audit logging, and encryption at rest. The PHI guardrail is a risk-reduction layer, not formal Safe-Harbor de-identification.
+This is a prototype on synthetic data, not a certified HIPAA-compliant system, and the hosted demo should never receive real client information. Each visitor to the demo works in their own copy of the records. Real-world use would also need a Business Associate Agreement with the model provider on HIPAA-eligible hosting, sign-in with role-based access and audit logging, and encryption at rest. The privacy screen reduces exposure; it isn't formal Safe Harbor de-identification.
 
 ## Author
-Built by Girum Dessalegn — https://github.com/Girumdess
+
+Girum Dessalegn · [github.com/Girumdess](https://github.com/Girumdess)

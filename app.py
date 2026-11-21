@@ -482,7 +482,7 @@ with tab_eval:
         rows = [{
             "Case": r["id"],
             "What it tests": r["category"].replace("_", " ").replace(" + ", ", ").capitalize()
-                             .replace("Ssn", "SSN").replace("adl", "ADL").replace("mrn", "MRN"),
+                             .replace("Ssn", "SSN").replace("adl", "ADL").replace("Mrn", "MRN"),
             "Planted details": len(r["phi_items"]),
             "Reached the note": len(r["phi_leaked"]),
             "Quality (1–5)": r["quality"]["overall"],

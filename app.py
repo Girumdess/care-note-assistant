@@ -481,12 +481,13 @@ with tab_eval:
         st.markdown("**Every test case**")
         rows = [{
             "Case": r["id"],
-            "What it tests": r["category"].replace("_", " ").replace(" + ", ", "),
+            "What it tests": r["category"].replace("_", " ").replace(" + ", ", ").capitalize()
+                             .replace("Ssn", "SSN").replace("adl", "ADL").replace("mrn", "MRN"),
             "Planted details": len(r["phi_items"]),
             "Reached the note": len(r["phi_leaked"]),
             "Quality (1–5)": r["quality"]["overall"],
         } for r in ok]
-        st.dataframe(rows, hide_index=True, width="stretch")
+        st.dataframe(rows, hide_index=True, width="stretch", height=35 * (len(rows) + 1) + 3)
         st.caption(f'Run on {s["timestamp"][:10]} · {s["usage"]["calls"]} model calls · '
                    f'{s["runtime_sec"]}s · about ${s["usage"]["cost_usd"]:.2f}. '
                    "Reproduce it with `python -m evals.run_evals`.")

@@ -6,7 +6,7 @@
 
 **[Try the live demo →](https://care-note-assist.streamlit.app)** No sign-up or API key needed. Every client and note in it is synthetic.
 
-<!-- screenshot -->
+![CareScribe front page: rough shift notes with a hospital name underlined, and the filed note with that name blacked out](docs/screenshot.png)
 
 ## What it does
 

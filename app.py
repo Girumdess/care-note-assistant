@@ -378,7 +378,8 @@ with tab_week:
     if not weeks:
         st.info("No notes yet for this client.")
     else:
-        wk = st.selectbox("Week", list(weeks.keys()), format_func=label_week)
+        week_by_label = {label_week(ws): ws for ws in weeks}
+        wk = week_by_label[st.selectbox("Week", list(week_by_label))]
         notes = weeks[wk]
         skey = f"wsum_{active_id}_{wk}"
         cached = DEMO.get(sel, {}).get("weekly", {}).get(wk)

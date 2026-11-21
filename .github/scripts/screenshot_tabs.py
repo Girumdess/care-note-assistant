@@ -26,7 +26,8 @@ def check(page, step):
 
 def pick(page, label, option):
     """Choose an option in a Streamlit selectbox by its label."""
-    page.get_by_label(label, exact=True).first.click()
+    box = page.locator('[data-testid="stSelectbox"]').filter(has_text=label).first
+    box.locator('[data-baseweb="select"]').click()
     page.get_by_role("option", name=option, exact=True).click()
     page.wait_for_timeout(1_200)
 
